@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dev  Portfolio </title>
+<meta name="description" content="Portfolio of a software engineer with superhero mindset. Specializing in full-stack development, React, Node.js, and scalable systems.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  /* 3D GLASS CARD SYSTEM */
+  .perspective-stage {
+    perspective: 2000px;
+    perspective-origin: center;
+  }
+  
+  .glass-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+  
+  .glass-card:hover {
+    transform: rotateY(10deg) rotateX(-5deg) translateZ(30px);
+  }
+  
+  .glass-card:nth-child(2):hover {
+    transform: rotateY(-8deg) rotateX(-5deg) translateZ(40px);
+  }
+  
+  .glass-card:nth-child(3):hover {
+    transform: rotateY(12deg) rotateX(-7deg) translateZ(35px);
+  }
+  
+  /* GLASS MORPHISM */
+  .glass-surface {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  /* FLOATING GLOW */
+  .glow-orb {
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float-glow 8s ease-in-out infinite;
+  }
+  
+  @keyframes float-glow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.1); }
+    66% { transform: translate(-30px, 30px) scale(0.9); }
+  }
+  
+  /* SKILL BAR 3D */
+  .skill-bar-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+  }
+  
+  .skill-bar-3d:hover {
+    transform: translateZ(10px);
+  }
+  
+  /* HERO CARD 3D */
+  .hero-card-3d {
+    transform-style: preserve-3d;
+    animation: float-card 6s ease-in-out infinite;
+  }
+  
+  @keyframes float-card {
+    0%, 100% { transform: translateY(0) rotateY(5deg); }
+    50% { transform: translateY(-20px) rotateY(-5deg); }
+  }
+  
+  /* TIMELINE 3D */
+  .timeline-item {
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+  }
+  
+  .timeline-item:hover {
+    transform: translateX(10px) translateZ(15px);
+  }
+  
+  /* BUTTON DEPTH */
+  .btn-3d {
+    transform: translateZ(0);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  }
+  
+  .btn-3d:hover {
+    transform: translateY(-3px) translateZ(10px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+  }
+  
+  .btn-3d-orange {
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+  }
+  
+  .btn-3d-orange:hover {
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);
+  }
+
+  /* NAV GLASS */
+  .nav-glass {
+    background: rgba(6, 8, 15, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* CONTACT FORM GLASS */
+  .input-glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .input-glass:focus {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(59, 130, 246, 0.5);
+    outline: none;
+    transform: translateZ(5px);
+  }
+
+  /* Disable snap scroll on mobile */
+  @media (max-width: 768px) {
+    .snap-y { scroll-snap-type: none; }
+    .glass-card:hover { transform: none; }
+  }
+</style>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { outfit: ["Outfit","sans-serif"] },
+      colors: {
+        darkBg:"#06080F",
+        heroBlue:"#3B82F6",
+        heroOrange:"#F97316"
+      }
+    }
+  }
+}
+</script>
+</head>
+
+<body class="bg-darkBg text-white font-outfit overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+
+<!-- ANIMATED BACKGROUND ORBS -->
+<div class="fixed inset-0 -z-10 overflow-hidden">
+  <div class="absolute top-20 left-20 w-96 h-96 bg-heroBlue rounded-full glow-orb"></div>
+  <div class="absolute bottom-40 right-20 w-96 h-96 bg-heroOrange rounded-full glow-orb" style="animation-delay: -3s;"></div>
+  <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-500 rounded-full glow-orb" style="animation-delay: -6s;"></div>
+</div>
+
+<!-- NAVIGATION GLASS -->
+<nav class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="#hero" class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-heroOrange">
+      DevHero
+    </a>
+    <div class="hidden md:flex gap-8 text-sm font-medium">
+      <a href="#about" class="hover:text-heroBlue transition-colors duration-300">About</a>
+      <a href="#skills" class="hover:text-heroBlue transition-colors duration-300">Skills</a>
+      <a href="#projects" class="hover:text-heroBlue transition-colors duration-300">Projects</a>
+      <a href="#contact" class="hover:text-heroOrange transition-colors duration-300">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section id="hero" class="snap-start min-h-screen flex items-center px-6 md:px-20 pt-20">
+  <div class="grid md:grid-cols-2 gap-16 items-center w-full max-w-7xl mx-auto perspective-stage">
+    <div>
+      <h1 class="text-6xl md:text-7xl font-extrabold leading-tight">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-heroBlue via-purple-400 to-heroOrange animate-pulse">
+          Software Engineer
+        </span><br>
+        <span class="text-gray-300 text-4xl md:text-5xl mt-2 block">MR.NAVEEN</span>
+      </h1>
+      <p class="text-gray-400 max-w-xl mt-6 text-lg leading-relaxed">
+        Crafting cinematic interfaces, scalable systems, and production-ready code. Transforming complex problems into elegant solutions.
+      </p>
+      <div class="flex gap-4 mt-8">
+        <a href="#projects" class="px-8 py-4 rounded-xl bg-heroBlue text-black font-bold btn-3d">
+          View Projects
+        </a>
+        <a href="#contact" class="px-8 py-4 rounded-xl border-2 border-heroOrange text-heroOrange hover:bg-heroOrange hover:text-black font-bold transition-all duration-300 btn-3d-orange">
+          Contact Me
+        </a>
+      </div>
+    </div>
+
+    <!-- 3D FLOATING CARD -->
+    <div class="hero-card-3d">
+      <div class="glass-surface rounded-3xl p-8 shadow-2xl">
+        <div class="w-full h-64 flex items-center justify-center mb-6">
+  <img
+    src="assets/profile.jpeg"
+    class="w-60 h-60 rounded-full object-cover border-4 border-heroBlue shadow-xl"
+  />
+</div>
+        <h3 class="text-2xl font-bold mb-2">Mission Mode</h3>
+        <p class="text-gray-400">Late-night coding energy ⚡</p>
+      </div>
+    </div>
+  </div>
+  
+
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" class="snap-start min-h-screen px-6 md:px-20 py-24 flex items-center">
+  <div class="max-w-5xl mx-auto perspective-stage">
+    <div class="glass-surface rounded-3xl p-12 shadow-2xl">
+      <h2 class="text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-heroOrange">
+        Origin Story
+      </h2>
+      <div class="space-y-6 text-lg text-gray-300 leading-relaxed">
+        <p>
+          I'm a full-stack developer who believes in writing code with purpose and impact. My journey started in 2024 when I discovered the power of turning ideas into reality through programming.
+        </p>
+        <p>
+          I specialize in building scalable web applications, from invoice management systems handling real-world business logic to AI-powered computer vision applications. Every project is an opportunity to push boundaries and create solutions that matter.
+        </p>
+        <p>
+          When I'm not coding, I'm exploring new technologies, contributing to open-source projects, or mentoring aspiring developers. My superhero mindset means I approach challenges with determination, creativity, and a commitment to excellence.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS SECTION -->
+<section id="skills" class="snap-start min-h-screen px-6 md:px-20 py-24 flex items-center">
+  <div class="max-w-5xl mx-auto w-full">
+    <h2 class="text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-heroOrange">
+      Power Levels
+    </h2>
+
+    <div class="space-y-8">
+      <div class="skill-bar-3d glass-surface rounded-2xl p-6">
+        <div class="flex justify-between mb-3 text-lg">
+          <span class="font-semibold">JavaScript / TypeScript</span>
+          <span class="text-heroBlue font-bold">95%</span>
+        </div>
+        <div class="h-4 bg-white/5 rounded-full overflow-hidden shadow-inner">
+          <div class="h-full w-[95%] bg-gradient-to-r from-heroBlue to-blue-300 rounded-full shadow-lg"></div>
+        </div>
+      </div>
+
+      <div class="skill-bar-3d glass-surface rounded-2xl p-6">
+        <div class="flex justify-between mb-3 text-lg">
+          <span class="font-semibold">React / React Native</span>
+          <span class="text-heroOrange font-bold">92%</span>
+        </div>
+        <div class="h-4 bg-white/5 rounded-full overflow-hidden shadow-inner">
+          <div class="h-full w-[92%] bg-gradient-to-r from-heroOrange to-orange-300 rounded-full shadow-lg"></div>
+        </div>
+      </div>
+
+      <div class="skill-bar-3d glass-surface rounded-2xl p-6">
+        <div class="flex justify-between mb-3 text-lg">
+          <span class="font-semibold">Node.js / Express</span>
+          <span class="text-heroBlue font-bold">90%</span>
+        </div>
+        <div class="h-4 bg-white/5 rounded-full overflow-hidden shadow-inner">
+          <div class="h-full w-[90%] bg-gradient-to-r from-heroBlue to-blue-300 rounded-full shadow-lg"></div>
+        </div>
+      </div>
+
+      <div class="skill-bar-3d glass-surface rounded-2xl p-6">
+        <div class="flex justify-between mb-3 text-lg">
+          <span class="font-semibold">Python / AI/ML</span>
+          <span class="text-heroOrange font-bold">85%</span>
+        </div>
+        <div class="h-4 bg-white/5 rounded-full overflow-hidden shadow-inner">
+          <div class="h-full w-[85%] bg-gradient-to-r from-heroOrange to-orange-300 rounded-full shadow-lg"></div>
+        </div>
+      </div>
+
+      <div class="skill-bar-3d glass-surface rounded-2xl p-6">
+        <div class="flex justify-between mb-3 text-lg">
+          <span class="font-semibold">PostgreSQL / MongoDB</span>
+          <span class="text-heroBlue font-bold">88%</span>
+        </div>
+        <div class="h-4 bg-white/5 rounded-full overflow-hidden shadow-inner">
+          <div class="h-full w-[88%] bg-gradient-to-r from-heroBlue to-blue-300 rounded-full shadow-lg"></div>
+        </div>
+      </div>
+
+      <div class="skill-bar-3d glass-surface rounded-2xl p-6">
+        <div class="flex justify-between mb-3 text-lg">
+          <span class="font-semibold">Docker </span>
+          <span class="text-heroOrange font-bold">50%</span>
+        </div>
+        <div class="h-4 bg-white/5 rounded-full overflow-hidden shadow-inner">
+          <div class="h-full w-[82%] bg-gradient-to-r from-heroOrange to-orange-300 rounded-full shadow-lg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3D GLASS PROJECTS -->
+<section id="projects" class="snap-start min-h-screen px-6 md:px-20 py-24 flex items-center">
+  <div class="max-w-7xl mx-auto w-full">
+    <h2 class="text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-heroOrange">
+       Projects
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-10 perspective-stage">
+
+      <!-- PROJECT CARD 1 -->
+      <div class="glass-card glass-surface rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-10 h-full flex flex-col">
+          <div class="text-6xl mb-6">📊</div>
+          <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-blue-300">
+            Invoice System
+          </h3>
+          <p class="text-gray-400 leading-relaxed mb-6 flex-grow">
+            Enterprise-grade invoicing with GST compliance, PDF generation, version control, and audit trails. Built for real businesses.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">React</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Node.js</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">PostgreSQL</span>
+          </div>
+          <a href="#contact" class="inline-block text-heroBlue font-bold text-lg hover:translate-x-2 transition-transform duration-300">
+            View Details →
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT CARD 2 -->
+      <div class="glass-card glass-surface rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-10 h-full flex flex-col">
+          <div class="text-6xl mb-6">🎯</div>
+          <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-heroOrange to-orange-300">
+            AI Sports Vision
+          </h3>
+          <p class="text-gray-400 leading-relaxed mb-6 flex-grow">
+            Computer vision system for real-time sports tracking and analytics. Player detection, movement analysis, and performance metrics.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-4 py-2 bg-heroOrange/10 text-heroOrange rounded-full text-sm font-medium border border-heroOrange/20">Python</span>
+            <span class="px-4 py-2 bg-heroOrange/10 text-heroOrange rounded-full text-sm font-medium border border-heroOrange/20">YOLO</span>
+            <span class="px-4 py-2 bg-heroOrange/10 text-heroOrange rounded-full text-sm font-medium border border-heroOrange/20">TensorFlow</span>
+          </div>
+          <a href="#contact" class="inline-block text-heroOrange font-bold text-lg hover:translate-x-2 transition-transform duration-300">
+            View Details →
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT CARD 3 -->
+      <div class="glass-card glass-surface rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-10 h-full flex flex-col">
+          <div class="text-6xl mb-6">🚌</div>
+          <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-blue-300">
+            School Transport
+          </h3>
+          <p class="text-gray-400 leading-relaxed mb-6 flex-grow">
+            Mobile-first solution for school transportation management. Live tracking, parent notifications, and route optimization.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">React Native</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Node.js</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Mongo DB</span>
+          </div>
+          <a href="#contact" class="inline-block text-heroBlue font-bold text-lg hover:translate-x-2 transition-transform duration-300">
+            View Details →
+          </a>
+        </div>
+      </div>
+
+      <div class="glass-card glass-surface rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-10 h-full flex flex-col">
+          <div class="text-6xl mb-6">🧾</div>
+          <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-blue-300">
+            Bakery Billing App
+          </h3>
+          <p class="text-gray-400 leading-relaxed mb-6 flex-grow">
+          Fast and lightweight billing system for bakeries with GST calculations,
+    invoice generation, daily sales tracking, and print-ready receipts.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">React Native</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Node.js</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Mongo DB</span>
+          </div>
+          <a href="#contact" class="inline-block text-heroBlue font-bold text-lg hover:translate-x-2 transition-transform duration-300">
+            View Details →
+          </a>
+        </div>
+      </div>
+      <div class="glass-card glass-surface rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-10 h-full flex flex-col">
+          <div class="text-6xl mb-6">🐐</div>
+          <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-blue-300">
+            Livestock Weight Estimation System
+          </h3>
+          <p class="text-gray-400 leading-relaxed mb-6 flex-grow">
+                AI-powered system that estimates livestock weight from images using computer
+    vision and deep learning. Detects animals, analyzes body size, and predicts
+    realistic weights with visual output.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Python</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">YOLO</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Computer Vision</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Deep learning</span>
+          </div>
+          <a href="#contact" class="inline-block text-heroBlue font-bold text-lg hover:translate-x-2 transition-transform duration-300">
+            View Details →
+          </a>
+        </div>
+      </div>
+      <div class="glass-card glass-surface rounded-3xl overflow-hidden shadow-2xl">
+        <div class="p-10 h-full flex flex-col">
+          <div class="text-6xl mb-6">🎓</div>
+          <h3 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-blue-300">
+            Student leave management System
+          </h3>
+          <p class="text-gray-400 leading-relaxed mb-6 flex-grow">
+              Digital platform for managing student leave requests with role-based approvals,
+    real-time notifications, and institution-wise access control.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">React Native</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Node.js</span>
+            <span class="px-4 py-2 bg-heroBlue/10 text-heroBlue rounded-full text-sm font-medium border border-heroBlue/20">Mongo DB</span>
+          </div>
+          <a href="#contact" class="inline-block text-heroBlue font-bold text-lg hover:translate-x-2 transition-transform duration-300">
+            View Details →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="snap-start min-h-screen px-6 md:px-20 py-24 flex items-center">
+  <div class="max-w-5xl mx-auto w-full">
+    <h2 class="text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-heroOrange">
+      Journey Timeline
+    </h2>
+
+    <div class="space-y-8">
+      
+      <div class="timeline-item glass-surface rounded-2xl p-8">
+        <div class="flex items-start gap-6">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-heroBlue to-blue-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+            2019
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-2">Discovered Coding</h3>
+            <p class="text-gray-400 leading-relaxed">First lines of JavaScript sparked an unstoppable journey into software development. Built first portfolio website and fell in love with creating digital experiences.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item glass-surface rounded-2xl p-8">
+        <div class="flex items-start gap-6">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-heroOrange to-orange-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+            2021
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-2">Professional Development</h3>
+            <p class="text-gray-400 leading-relaxed">Started building real-world applications for clients. Mastered React, Node.js, and database architecture. Delivered first production system serving 1000+ users.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item glass-surface rounded-2xl p-8">
+        <div class="flex items-start gap-6">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-heroBlue to-blue-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+            2023
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-2">Full-Stack Mastery</h3>
+            <p class="text-gray-400 leading-relaxed">Launched multiple production systems. Expanded into AI/ML and computer vision applications. Started mentoring junior developers and contributing to open source.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item glass-surface rounded-2xl p-8">
+        <div class="flex items-start gap-6">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-heroOrange to-orange-400 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+            2025
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-2">Hero Mode Activated</h3>
+            <p class="text-gray-400 leading-relaxed">Building scalable systems that serve thousands of users. Leading development teams and architecting enterprise solutions. The journey continues!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="snap-start min-h-screen px-6 md:px-20 py-24 flex items-center">
+  <div class="max-w-4xl mx-auto w-full">
+    <h2 class="text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-heroBlue to-heroOrange">
+      Let's Connect
+    </h2>
+    <p class="text-center text-gray-400 mb-12 text-lg">
+      Ready to bring your project to life? Let's discuss how we can work together.
+    </p>
+
+    <div class="glass-surface rounded-3xl p-10 shadow-2xl">
+      <form class="space-y-6">
+        <div>
+          <label class="block text-sm font-semibold mb-3 text-gray-300">Your Name</label>
+          <input type="text" required class="w-full px-6 py-4 rounded-xl input-glass text-white placeholder-gray-500" placeholder="John Doe">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-3 text-gray-300">Email Address</label>
+          <input type="email" required class="w-full px-6 py-4 rounded-xl input-glass text-white placeholder-gray-500" placeholder="john@example.com">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-3 text-gray-300">Your Message</label>
+          <textarea rows="5" required class="w-full px-6 py-4 rounded-xl input-glass text-white placeholder-gray-500 resize-none" placeholder="Tell me about your project..."></textarea>
+        </div>
+
+        <button type="submit" class="w-full px-8 py-5 rounded-xl bg-gradient-to-r from-heroBlue to-heroOrange text-white font-bold text-lg btn-3d">
+          Send Message
+        </button>
+      </form>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-10">
+        <a href="mailto:your.email@example.com" class="px-6 py-3 rounded-xl glass-surface hover:bg-white/10 transition-all duration-300 font-medium">
+          📧 Email
+        </a>
+        <a href="https://github.com/yourusername" target="_blank" class="px-6 py-3 rounded-xl glass-surface hover:bg-white/10 transition-all duration-300 font-medium">
+          💻 GitHub
+        </a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="px-6 py-3 rounded-xl glass-surface hover:bg-white/10 transition-all duration-300 font-medium">
+          💼 LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="snap-start py-12 px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-gray-500 text-center md:text-left">
+        © 2025 DevHero · Code with purpose 🦸‍♂️
+      </div>
+      <div class="flex gap-8 text-sm">
+        <a href="#hero" class="text-gray-500 hover:text-heroBlue transition-colors duration-300">Home</a>
+        <a href="#about" class="text-gray-500 hover:text-heroBlue transition-colors duration-300">About</a>
+        <a href="#projects" class="text-gray-500 hover:text-heroBlue transition-colors duration-300">Projects</a>
+        <a href="#contact" class="text-gray-500 hover:text-heroOrange transition-colors duration-300">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
